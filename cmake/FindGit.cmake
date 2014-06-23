@@ -36,6 +36,8 @@
 #  <var-prefix>_WC_ROOT - Same value as working copy URL
 #  <var-prefix>_WC_LAST_CHANGED_DATE - date of last commit
 #  <var-prefix>_WC_GITSVN - Set to false
+#  <var-prefix>_WC_LATEST_TAG - Latest tag found in history
+#  <var-prefix>_WC_LATEST_TAG_LONG - <last tag>-<commits since then>-g<actual commit hash>
 #
 # ... and also the following ones if it's a git-svn repository:
 #  <var-prefix>_WC_GITSVN - Set to True if it is a
@@ -110,6 +112,15 @@ if(GIT_EXECUTABLE)
        OUTPUT_STRIP_TRAILING_WHITESPACE)
     string(REGEX REPLACE "^([0-9][0-9][0-9][0-9]\\-[0-9][0-9]\\-[0-9][0-9]).*"
       "\\1" ${prefix}_WC_LAST_CHANGED_DATE "${${prefix}_show_output}")
+
+    execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
+       WORKING_DIRECTORY ${dir}
+       OUTPUT_VARIABLE ${prefix}_WC_LATEST_TAG
+       OUTPUT_STRIP_TRAILING_WHITESPACE)
+    execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags
+       WORKING_DIRECTORY ${dir}
+       OUTPUT_VARIABLE ${prefix}_WC_LATEST_TAG_LONG
+       OUTPUT_STRIP_TRAILING_WHITESPACE)
 
     set(${prefix}_WC_GITSVN False)
 
