@@ -116,11 +116,13 @@ if(GIT_EXECUTABLE)
     execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags --abbrev=0
        WORKING_DIRECTORY ${dir}
        OUTPUT_VARIABLE ${prefix}_WC_LATEST_TAG
-       OUTPUT_STRIP_TRAILING_WHITESPACE)
+       OUTPUT_STRIP_TRAILING_WHITESPACE
+       ERROR_QUIET)
     execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags
        WORKING_DIRECTORY ${dir}
        OUTPUT_VARIABLE ${prefix}_WC_LATEST_TAG_LONG
-       OUTPUT_STRIP_TRAILING_WHITESPACE)
+       OUTPUT_STRIP_TRAILING_WHITESPACE
+       ERROR_QUIET)
 
     set(${prefix}_WC_GITSVN False)
 
