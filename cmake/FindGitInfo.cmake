@@ -18,12 +18,6 @@
 #
 ################################################################################
 
-#
-# The module defines the following variables:
-#   GIT_EXECUTABLE - path to git command line client
-#   GIT_FOUND - true if the command line client was found
-#   GIT_VERSION_STRING - the version of git found (since CMake 2.8.8)
-#
 # If the command line client executable is found the macro
 #  GIT_WC_INFO(<dir> <var-prefix>)
 # is defined to extract information of a git working copy at
@@ -60,32 +54,21 @@
 #   endif()
 #
 
-# Look for 'git' or 'eg' (easy git)
-#
-set(git_names git eg)
+# Look for git. Respect the quiet and required flags passed to this module.
+set(FIND_QUIETLY_FLAG "")
+if (DEFINED GitInfo_FIND_QUIETLY)
+    set(FIND_QUIETLY_FLAG "QUIET")
+endif ()
 
-# Prefer .cmd variants on Windows unless running in a Makefile
-# in the MSYS shell.
-#
-if(WIN32)
-  if(NOT CMAKE_GENERATOR MATCHES "MSYS")
-    # Note: Due to a bug in 'git.cmd' preventing it from returning the exit code of 'git',
-    #       we excluded it from the list of executables to search.
-    # See http://code.google.com/p/msysgit/issues/detail?id=428
-    # TODO Check if 'git' exists, get the associated version, if the corresponding version
-    #      is known to have a working version of 'git.cmd', use it.
-    set(git_names git eg.cmd eg)
-  endif()
-endif()
+set(FIND_REQUIRED_FLAG "")
+if (DEFINED GitInfo_FIND_REQUIRED)
+    set(FIND_REQUIRED_FLAG "REQUIRED")
+endif ()
 
-find_program(GIT_EXECUTABLE ${git_names}
-  PATHS
-    "C:/Program Files/Git/bin"
-    "C:/Program Files (x86)/Git/bin"
-  DOC "git command line client")
-mark_as_advanced(GIT_EXECUTABLE)
+find_package(Git ${FIND_QUIETLY_FLAG} ${FIND_REQUIRED_FLAG})
 
-if(GIT_EXECUTABLE)
+
+if(GIT_FOUND)
   execute_process(COMMAND ${GIT_EXECUTABLE} --version
                   OUTPUT_VARIABLE git_version
                   ERROR_QUIET
@@ -179,10 +162,4 @@ if(GIT_EXECUTABLE)
     endif()
 
   endmacro(GIT_WC_INFO)
-endif(GIT_EXECUTABLE)
-
-# Handle the QUIETLY and REQUIRED arguments and set GIT_FOUND to TRUE if
-# all listed variables are TRUE
-
-include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Git DEFAULT_MSG GIT_EXECUTABLE)
+endif(GIT_FOUND)
