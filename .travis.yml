@@ -1,0 +1,27 @@
+language: c
+compiler: gcc
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+
+    - os: osx
+      compiler: clang
+      before_install:
+        - brew update --quiet >& /dev/null
+        - brew outdated cmake || brew upgrade cmake
+
+
+addons:
+  apt:
+    sources:
+      - kalakris-cmake
+    packages:
+      - cmake
+
+
+script:
+  - mkdir travis && cd travis
+  - cmake ..
