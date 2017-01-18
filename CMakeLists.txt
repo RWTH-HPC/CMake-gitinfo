@@ -21,6 +21,11 @@
 
 # project information
 cmake_minimum_required(VERSION 2.8)
+
+if (POLICY CMP0048)
+  cmake_policy(SET CMP0048 NEW)
+endif()
+
 project("test" C)
 
 # cmake configuration
@@ -40,3 +45,9 @@ message(STATUS "  WC_ROOT:              ${VAR_WC_ROOT}")
 message(STATUS "  WC_LAST_CHANGED_DATE: ${VAR_WC_LAST_CHANGED_DATE}")
 message(STATUS "  WC_LATEST_TAG:        ${VAR_WC_LATEST_TAG}")
 message(STATUS "  WC_LATEST_TAG_LONG:   ${VAR_WC_LATEST_TAG_LONG}")
+
+
+git_version_info()
+message(STATUS "Configuring test version: ${test_VERSION} "
+               "(${test_MAJOR_VERSION}.${test_MINOR_VERSION}."
+               "${test_PATCH_VERSION})")

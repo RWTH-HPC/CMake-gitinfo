@@ -162,4 +162,42 @@ if(GIT_FOUND)
     endif()
 
   endmacro(GIT_WC_INFO)
+
+
+  # Get the version info from the latest tag and set it as the projects version.
+  #
+  # WARNING: This macro overwrites previously set versions.
+  #
+  macro(GIT_VERSION_INFO)
+    if (EXISTS "${PROJECT_SOURCE_DIR}/.git")
+      find_package(GitInfo REQUIRED)
+      git_wc_info(${PROJECT_SOURCE_DIR} GIT)
+
+    # If git is not available (e.g. this git was packed as .tar.gz), try to read
+    # the version-info from a hidden file in the root directory. This file
+    # should not be versioned, but added at packaging time.
+    elseif (EXISTS "${PROJECT_SOURCE_DIR}/.version")
+      file(READ "${PROJECT_SOURCE_DIR}/.version" GIT_WC_LATEST_TAG_LONG)
+
+    # If no version could be gathered by git or the version file, print a
+    # warning, so the user has to define a version in the backup version file.
+    else ()
+      message(FATAL_ERROR "No version provided by .version file")
+    endif ()
+
+    if (GIT_WC_LATEST_TAG_LONG MATCHES
+        "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)-([0-9]+)-")
+      set(prefix ${CMAKE_PROJECT_NAME})
+
+      set(${prefix}_VERSION ${GIT_WC_LATEST_TAG_LONG} CACHE STRING "" FORCE)
+      set(${prefix}_MAJOR_VERSION ${CMAKE_MATCH_2} CACHE STRING "" FORCE)
+      set(${prefix}_MINOR_VERSION ${CMAKE_MATCH_3} CACHE STRING "" FORCE)
+      set(${prefix}_PATCH_VERSION ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
+
+      mark_as_advanced(${prefix}_VERSION ${prefix}_MAJOR_VERSION
+                       ${prefix}_MINOR_VERSION ${prefix}_PATCH_VERSION)
+    else ()
+      message(FATAL_ERROR "Invalid version info: '${GIT_WC_LATEST_TAG_LONG}'.")
+	endif ()
+  endmacro()
 endif(GIT_FOUND)

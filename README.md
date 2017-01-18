@@ -51,6 +51,32 @@ The value of the following variables depends on ``<PREFIX>_WC_GITSVN``:
 | ``<PREFIX>_WC_LAST_CHANGED_REV`` | Revision of last commit | not available |
 | ``<PREFIX>_WC_LAST_CHANGED_LOG`` | Last log of base commit | not available |
 
+
+## Additional macros
+
+* **git_version_info**
+
+  This macro sets your projects `*_VERSION` variables by versions found by `git describe --tags`. All you need to do is setting a tag like `vX.Y` and you'll get a version like `vX.Y-Z-<hash>`, were `Z` is the number of commits since the last tag and `hash` the short hash of the current `HEAD`. All formats of tags are supported, but they have to include two numbers separated by a dot.
+
+  Example:
+  ```CMake
+  find_package(Gitinfo)
+  git_version_info()
+
+  message(STATUS "Configuring NAME version: ${NAME_VERSION}
+                 "(${NAME_MAJOR_VERSION}.${NAME_MINOR_VERSION}.
+                 "${NAME_PATCH_VERSION})")
+  ```
+  ```
+  ~:$git describe --tags
+  v1.5-beta-3-g7184473
+  ~:$cmake ..
+  [...]
+  -- Configuring NAME version v1.5-beta-3-g7184473 (1.5.3)
+  ```
+
+  For packaging a `.version` file should be added, containing the output of `git describe --tags` of the packed git version.
+
 ## Contribute
 
 Anyone is welcome to contribute. Simply fork this repository, make your changes **in an own branch** and create a pull-request for your change. Please do only one change per pull-request.
