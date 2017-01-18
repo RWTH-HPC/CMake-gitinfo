@@ -77,6 +77,9 @@ The value of the following variables depends on ``<PREFIX>_WC_GITSVN``:
 
   For packaging a `.version` file should be added, containing the output of `git describe --tags` of the packed git version.
 
+  If even no `.version` file could be found, the version won't be set and may be empty. Like in `find_package` you may add the `REQUIRED` parameter to `git_version_info`, so it will print an error message instead of a warning, which will stop the execution of `CMake`.
+
+
 ## Contribute
 
 Anyone is welcome to contribute. Simply fork this repository, make your changes **in an own branch** and create a pull-request for your change. Please do only one change per pull-request.

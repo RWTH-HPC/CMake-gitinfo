@@ -182,7 +182,11 @@ if(GIT_FOUND)
     # If no version could be gathered by git or the version file, print a
     # warning, so the user has to define a version in the backup version file.
     else ()
-      message(FATAL_ERROR "No version provided by .version file")
+      if (${ARGN} EQUAL "REQUIRED")
+        message(FATAL_ERROR "No version provided by git or .version file")
+      else ()
+        message(WARNING "No version provided by git or .version file")
+      endif()
     endif ()
 
     if (GIT_WC_LATEST_TAG_LONG MATCHES
