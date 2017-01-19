@@ -170,7 +170,6 @@ if(GIT_FOUND)
   #
   macro(GIT_VERSION_INFO)
     if (EXISTS "${PROJECT_SOURCE_DIR}/.git")
-      find_package(GitInfo REQUIRED)
       git_wc_info(${PROJECT_SOURCE_DIR} GIT)
 
     # If git is not available (e.g. this git was packed as .tar.gz), try to read
