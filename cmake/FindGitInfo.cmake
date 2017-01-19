@@ -189,14 +189,19 @@ if(GIT_FOUND)
       endif()
     endif ()
 
-    if (GIT_WC_LATEST_TAG_LONG MATCHES
-        "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)-([0-9]+)-")
+    if (GIT_WC_LATEST_TAG_LONG MATCHES "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)")
       set(prefix ${CMAKE_PROJECT_NAME})
 
       set(${prefix}_VERSION ${GIT_WC_LATEST_TAG_LONG} CACHE STRING "" FORCE)
       set(${prefix}_MAJOR_VERSION ${CMAKE_MATCH_2} CACHE STRING "" FORCE)
       set(${prefix}_MINOR_VERSION ${CMAKE_MATCH_3} CACHE STRING "" FORCE)
-      set(${prefix}_PATCH_VERSION ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
+
+      if (GIT_WC_LATEST_TAG_LONG MATCHES
+          "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)-([0-9]+)-")
+        set(${prefix}_PATCH_VERSION ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
+      else ()
+        set(${prefix}_PATCH_VERSION 0 CACHE STRING "" FORCE)
+      endif()
 
       mark_as_advanced(${prefix}_VERSION ${prefix}_MAJOR_VERSION
                        ${prefix}_MINOR_VERSION ${prefix}_PATCH_VERSION)
