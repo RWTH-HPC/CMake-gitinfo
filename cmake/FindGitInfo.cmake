@@ -166,9 +166,10 @@ if(GIT_FOUND)
 
   # Get the version info from the latest tag and set it as the projects version.
   #
-  # WARNING: This macro overwrites previously set versions.
+  # Parameters:
+  #   prefix The prefix for all version variables.
   #
-  macro(GIT_VERSION_INFO)
+  macro(GIT_VERSION_INFO prefix)
     if (EXISTS "${PROJECT_SOURCE_DIR}/.git")
       git_wc_info(${PROJECT_SOURCE_DIR} GIT)
 
@@ -189,8 +190,6 @@ if(GIT_FOUND)
     endif ()
 
     if (GIT_WC_LATEST_TAG_LONG MATCHES "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)")
-      set(prefix ${CMAKE_PROJECT_NAME})
-
       set(${prefix}_VERSION ${GIT_WC_LATEST_TAG_LONG} CACHE STRING "" FORCE)
       set(${prefix}_MAJOR_VERSION ${CMAKE_MATCH_2} CACHE STRING "" FORCE)
       set(${prefix}_MINOR_VERSION ${CMAKE_MATCH_3} CACHE STRING "" FORCE)
