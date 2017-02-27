@@ -178,6 +178,7 @@ if(GIT_FOUND)
     # should not be versioned, but added at packaging time.
     elseif (EXISTS "${PROJECT_SOURCE_DIR}/.version")
       file(READ "${PROJECT_SOURCE_DIR}/.version" GIT_WC_LATEST_TAG_LONG)
+      string(STRIP "${GIT_WC_LATEST_TAG_LONG}" GIT_WC_LATEST_TAG_LONG)
 
     # If no version could be gathered by git or the version file, print a
     # warning, so the user has to define a version in the backup version file.
