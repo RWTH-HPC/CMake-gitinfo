@@ -1,7 +1,7 @@
 # CMake-gitinfo
 
-[![Travis](https://img.shields.io/travis/RWTH-ELP/CMake-gitinfo/master.svg?style=flat-square)](https://travis-ci.org/RWTH-ELP/CMake-gitinfo) [![](https://img.shields.io/github/issues-raw/RWTH-ELP/CMake-gitinfo.svg?style=flat-square)](https://github.com/RWTH-ELP/CMake-gitinfo/issues)
-[![modified BSD license](http://img.shields.io/badge/license-modified BSD-blue.svg?style=flat-square)](LICENSE)
+[![Travis](https://img.shields.io/travis/RWTH-HPC/CMake-gitinfo/master.svg?style=flat-square)](https://travis-ci.org/RWTH-HPC/CMake-gitinfo) [![](https://img.shields.io/github/issues-raw/RWTH-HPC/CMake-gitinfo.svg?style=flat-square)](https://github.com/RWTH-HPC/CMake-gitinfo/issues)
+[![](http://img.shields.io/badge/license-modified BSD-blue.svg?style=flat-square)](LICENSE)
 
 CMake module to get information about current git status.
 
