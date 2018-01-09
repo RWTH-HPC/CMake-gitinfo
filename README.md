@@ -59,7 +59,7 @@ The value of the following variables depends on ``<PREFIX>_WC_GITSVN``:
 
   This macro sets your projects `*_VERSION` variables by versions found by `git describe --tags`. All you need to do is setting a tag like `vX.Y` and you'll get a version like `vX.Y-Z-<hash>`, were `Z` is the number of commits since the last tag and `hash` the short hash of the current `HEAD`. All formats of tags are supported, but they have to include two numbers separated by a dot.
 
-  You may pass a combination of these variables to the `VERSION` argument of `project`, e.g. `${NAME_MAJOR_VERSION}.${NAME_MINOR_VERSION}.${NAME_PATCH_VERSION}`.
+  You may pass a combination of these variables to the `VERSION` argument of `project`, e.g. `${NAME_VERSION_MAJOR}.${NAME_VERSION_MINOR}.${NAME_VERSION_PATCH}`.
 
   Example:
   ```CMake
@@ -67,8 +67,8 @@ The value of the following variables depends on ``<PREFIX>_WC_GITSVN``:
   git_version_info(NAME)
 
   message(STATUS "Configuring NAME version: ${NAME_VERSION}
-                 "(${NAME_MAJOR_VERSION}.${NAME_MINOR_VERSION}.
-                 "${NAME_PATCH_VERSION})")
+                 "(${NAME_VERSION_MAJOR}.${NAME_VERSION_MINOR}.
+                 "${NAME_VERSION_PATCH})")
   ```
   ```
   ~:$git describe --tags

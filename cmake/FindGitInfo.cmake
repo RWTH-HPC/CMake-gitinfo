@@ -192,18 +192,18 @@ if(GIT_FOUND)
 
     if (GIT_WC_LATEST_TAG_LONG MATCHES "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)")
       set(${prefix}_VERSION ${GIT_WC_LATEST_TAG_LONG} CACHE STRING "" FORCE)
-      set(${prefix}_MAJOR_VERSION ${CMAKE_MATCH_2} CACHE STRING "" FORCE)
-      set(${prefix}_MINOR_VERSION ${CMAKE_MATCH_3} CACHE STRING "" FORCE)
+      set(${prefix}_VERSION_MAJOR ${CMAKE_MATCH_2} CACHE STRING "" FORCE)
+      set(${prefix}_VERSION_MINOR ${CMAKE_MATCH_3} CACHE STRING "" FORCE)
 
       if (GIT_WC_LATEST_TAG_LONG MATCHES
           "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)-([0-9]+)-")
-        set(${prefix}_PATCH_VERSION ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
+        set(${prefix}_VERSION_PATCH ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
       else ()
-        set(${prefix}_PATCH_VERSION 0 CACHE STRING "" FORCE)
+        set(${prefix}_VERSION_PATCH 0 CACHE STRING "" FORCE)
       endif()
 
-      mark_as_advanced(${prefix}_VERSION ${prefix}_MAJOR_VERSION
-                       ${prefix}_MINOR_VERSION ${prefix}_PATCH_VERSION)
+      mark_as_advanced(${prefix}_VERSION ${prefix}_VERSION_MAJOR
+                       ${prefix}_VERSION_MINOR ${prefix}_VERSION_PATCH)
     else ()
       message(FATAL_ERROR "Invalid version info: '${GIT_WC_LATEST_TAG_LONG}'.")
 	endif ()
