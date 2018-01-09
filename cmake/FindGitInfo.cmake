@@ -46,7 +46,7 @@
 #  <var-prefix>_WC_LAST_CHANGED_LOG - last log of base revision
 #
 # Example usage:
-#   find_package(Git)
+#   find_package(GitInfo)
 #   if(GIT_FOUND)
 #    GIT_WC_INFO(${PROJECT_SOURCE_DIR} Project)
 #    message("Current revision is ${Project_WC_REVISION_HASH}")
