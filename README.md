@@ -12,7 +12,7 @@ CMake module to get information about current git status.
 To use [FindGitInfo.cmake](cmake/FindGitInfo.cmake), simply add this repository as git submodule into your own repository
 ```Shell
 mkdir externals
-git submodule add git://github.com/RWTH-ELP/CMake-gitinfo.git externals/CMake-gitinfo
+git submodule add git://github.com/RWTH-HPC/CMake-gitinfo.git externals/CMake-gitinfo
 ```
 and adding ```externals/cmake-gitinfo/cmake``` to your ```CMAKE_MODULE_PATH```
 ```CMake
@@ -87,7 +87,7 @@ The value of the following variables depends on ``<PREFIX>_WC_GITSVN``:
 
 Anyone is welcome to contribute. Simply fork this repository, make your changes **in an own branch** and create a pull-request for your change. Please do only one change per pull-request.
 
-You found a bug? Please fill out an [issue](https://github.com/RWTH-ELP/CMake-gitinfo/issues) and include any data to reproduce the bug.
+You found a bug? Please fill out an [issue](https://github.com/RWTH-HPC/CMake-gitinfo/issues) and include any data to reproduce the bug.
 
 
 #### Contributors
