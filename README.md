@@ -78,7 +78,7 @@ The value of the following variables depends on ``<PREFIX>_WC_GITSVN``:
   -- Configuring NAME version v1.5-beta-3-g7184473 (1.5.3)
   ```
 
-  For packaging a `.version` file should be added, containing the output of `git describe --tags` of the packed git version. The `project-version-files-${PREFIX}` target generates this file, but is excluded from main. To generate all version files (even those of subprojects) before deploy, just depend on `project-version-files`. A list of all generated version files is accessible via the `GIT_GENERATED_VERSION_FILES` `GLOBAL` property.
+  For packaging a `.version` file should be added, containing the output of `git describe --tags` of the packed git version. The `project-version-files-${PREFIX}` target generates this file, but is excluded from main. To generate all version files (even those of subprojects) before deploy, just depend on `project-version-files`. A list of all generated version files is accessible via the `GIT_GENERATED_VERSION_FILES` `GLOBAL` property. *NOTE: You may want to include `CPackDeploy` after `CPack` to add the `package_deploy` target, which handles source packaging with version files automatically.
 
   If even no `.version` file could be found, the version won't be set and may be empty. Like in `find_package` you may add the `REQUIRED` parameter to `git_version_info`, so it will print an error message instead of a warning, which will stop the execution of `CMake`.
 
