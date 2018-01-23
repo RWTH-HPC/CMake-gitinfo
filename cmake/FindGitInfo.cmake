@@ -219,14 +219,24 @@ if(GIT_FOUND)
       set(${prefix}_VERSION_MINOR ${CMAKE_MATCH_3} CACHE STRING "" FORCE)
 
       if (GIT_WC_LATEST_TAG_LONG MATCHES
-          "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)-([0-9]+)-")
-        set(${prefix}_VERSION_PATCH ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
+          "^([^0-9]*)([0-9]+)[.]([0-9]+)[.]([0-9]+)")
+        set(${prefix}_VERSION_PATCH ${CMAKE_MATCH_4} CACHE STRING "" FORCE)
       else ()
         set(${prefix}_VERSION_PATCH 0 CACHE STRING "" FORCE)
       endif()
 
-      mark_as_advanced(${prefix}_VERSION ${prefix}_VERSION_MAJOR
-                       ${prefix}_VERSION_MINOR ${prefix}_VERSION_PATCH)
+      if (GIT_WC_LATEST_TAG_LONG MATCHES
+          "^([^0-9]*)([0-9]+)[.]([0-9]+)(.*)-([0-9]+)-")
+        set(${prefix}_VERSION_TWEAK ${CMAKE_MATCH_5} CACHE STRING "" FORCE)
+      else ()
+        set(${prefix}_VERSION_TWEAK 0 CACHE STRING "" FORCE)
+      endif()
+
+      mark_as_advanced(${prefix}_VERSION
+                       ${prefix}_VERSION_MAJOR
+                       ${prefix}_VERSION_MINOR
+                       ${prefix}_VERSION_PATCH
+                       ${prefix}_VERSION_TWEAK)
     else ()
       message(FATAL_ERROR "Invalid version info: '${GIT_WC_LATEST_TAG_LONG}'.")
 	endif ()

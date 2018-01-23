@@ -49,5 +49,5 @@ message(STATUS "  WC_LATEST_TAG_LONG:   ${VAR_WC_LATEST_TAG_LONG}")
 
 git_version_info(NAME)
 message(STATUS "Configuring NAME version: ${NAME_VERSION} "
-               "(${NAME_VERSION_MAJOR}.${NAME_VERSION_MINOR}."
-               "${NAME_VERSION_PATCH})")
+               "(${NAME_VERSION_MAJOR}.${NAME_VERSION_MINOR}"
+               ".${NAME_VERSION_PATCH}.${NAME_VERSION_TWEAK})")
