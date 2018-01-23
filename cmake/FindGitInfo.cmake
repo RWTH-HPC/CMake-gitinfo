@@ -170,14 +170,37 @@ if(GIT_FOUND)
   #   prefix The prefix for all version variables.
   #
   macro(GIT_VERSION_INFO prefix)
+    # If this project is not deployed via git, the following version file will
+    # be used as fallback and needs to be deployed along with the sources. These
+    # will be generated automatically by depending on the global target
+    # 'project-version-files', if this project has access to the related git
+    # repositoy.
+    set(VERSION_FILE "${PROJECT_SOURCE_DIR}/.version")
+    if (NOT TARGET project-version-files)
+      add_custom_target(project-version-files)
+    endif ()
+
     if (EXISTS "${PROJECT_SOURCE_DIR}/.git")
       git_wc_info(${PROJECT_SOURCE_DIR} GIT)
+
+      # Add commands and targets for generating the required version file for
+      # source package deploys. The file will also be to a global property, so
+      # one is able to access a list of all generated version files, e.g. to
+      # clean up the source directory after the package has been packed.
+      add_custom_command(
+        OUTPUT ${VERSION_FILE}
+        COMMAND ${GIT_EXECUTABLE} describe --tags > ${VERSION_FILE}
+        WORKING_DIRECTORY ${PROJECT_SOURCE_DIR})
+      set_property(GLOBAL APPEND
+                   PROPERTY GIT_GENERATED_VERSION_FILES "${VERSION_FILE}")
+      add_custom_target(project-version-files-${prefix} DEPENDS ${VERSION_FILE})
+      add_dependencies(project-version-files project-version-files-${prefix})
 
     # If git is not available (e.g. this git was packed as .tar.gz), try to read
     # the version-info from a hidden file in the root directory. This file
     # should not be versioned, but added at packaging time.
-    elseif (EXISTS "${PROJECT_SOURCE_DIR}/.version")
-      file(READ "${PROJECT_SOURCE_DIR}/.version" GIT_WC_LATEST_TAG_LONG)
+    elseif (EXISTS "${VERSION_FILE}")
+      file(READ "${VERSION_FILE}" GIT_WC_LATEST_TAG_LONG)
       string(STRIP "${GIT_WC_LATEST_TAG_LONG}" GIT_WC_LATEST_TAG_LONG)
 
     # If no version could be gathered by git or the version file, print a
